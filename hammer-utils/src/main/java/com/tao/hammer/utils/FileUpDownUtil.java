@@ -31,7 +31,7 @@ public final class FileUpDownUtil {
      * @param filePath      filePath example "/files/Upload"
      * @return
      */
-    public static String FilesUpload_transferTo_spring(HttpServletRequest request
+    public static String filesUploadTransformToSpring(HttpServletRequest request
             , MultipartFile multipartFile, String filePath) {
         if (multipartFile != null) {
             //get files suffix
@@ -63,7 +63,7 @@ public final class FileUpDownUtil {
      * @param filePath      filePath example "/files/Upload"
      * @return
      */
-    public static String FilesUpload_stream(HttpServletRequest request
+    public static String filesUpLoadStream(HttpServletRequest request
             , MultipartFile multipartFile, String filePath) {
         if (multipartFile != null) {
             //get files suffix
@@ -76,9 +76,9 @@ public final class FileUpDownUtil {
             try {
                 InputStream inputStream = multipartFile.getInputStream();
                 FileOutputStream fileOutputStream = new FileOutputStream(absolutePath);
-                byte buffer[] = new byte[4096]; //create a buffer
+                byte[] buffer = new byte[4096];
                 long fileSize = multipartFile.getSize();
-                if (fileSize <= buffer.length) {//if fileSize < buffer
+                if (fileSize <= buffer.length) {
                     buffer = new byte[(int) fileSize];
                 }
                 int line = 0;
@@ -103,7 +103,7 @@ public final class FileUpDownUtil {
      * @param filePath example "/file/test.txt"
      * @return
      */
-    public static void FilesDownload_stream(HttpServletRequest request, HttpServletResponse response
+    public static void filesDownLoadStream(HttpServletRequest request, HttpServletResponse response
             , String filePath) {
         //get server path (real path)
         String realPath = request.getSession().getServletContext().getRealPath(filePath);
