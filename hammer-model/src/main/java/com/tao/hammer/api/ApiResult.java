@@ -1,6 +1,9 @@
 package com.tao.hammer.api;
 
+import com.tao.hammer.Pagination;
+
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author tyq
@@ -37,7 +40,29 @@ public class ApiResult<T> {
         return SUCCESS;
     }
 
-    public static <T> ApiResult success(T data) {
+    public static <T> ApiResult<T> success(T data) {
         return new ApiResult<T>(true, null, null, data);
+    }
+
+    /**
+     * 根据参数组装给表格使用的成功处理结果
+     *
+     * @param data 业务数据体
+     * @param summary 合计
+     * @param total 总条数
+     */
+    public static <T, S> ApiResult<List<T>> success(List<T> data, S summary, long total) {
+        return new ApiTableResult<T, S>(true, null, null, data, summary, total);
+    }
+
+    /**
+     * 根据参数组装给表格使用的成功处理结果
+     */
+    public static <T, S> ApiResult<List<T>> success(Pagination<T> pagination) {
+        return new ApiTableResult<T, S>(true, null, null, pagination.getRecords(), null, pagination.getTotal());
+    }
+
+    public static <T> ApiResult<T> failure(String code, String message) {
+        return new ApiResult<T>(false, code, message, null);
     }
 }
