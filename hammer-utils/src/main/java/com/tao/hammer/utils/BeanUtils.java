@@ -16,6 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * 对象拷贝
+ *
  * @author tyq
  * @version 1.0, 2017/11/3
  */
