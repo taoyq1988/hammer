@@ -14,11 +14,11 @@ import java.util.UUID;
  * Create by tyq on 2017/10/12.
  */
 
-public final class FileUpDownUtil {
+public final class FileUpDownUtils {
     /**
      * private constructor method that make class can not be instantiation
      */
-    private FileUpDownUtil() {
+    private FileUpDownUtils() {
         throw new Error("The class Cannot be instance !");
     }
 
