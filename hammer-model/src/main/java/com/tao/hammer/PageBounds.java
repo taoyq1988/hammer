@@ -1,10 +1,13 @@
 package com.tao.hammer;
 
+import lombok.Data;
+
 /**
  * 分页条件
  * @author tyq
  * @version 1.0, 2017/11/1
  */
+@Data
 public class PageBounds {
     private static final int DEFAULT_PAGE_SIZE = 20;
 

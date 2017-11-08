@@ -65,4 +65,41 @@ public class ApiResult<T> {
     public static <T> ApiResult<T> failure(String code, String message) {
         return new ApiResult<T>(false, code, message, null);
     }
+
+
+    /**
+     * getter and setter
+     */
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getMessageCode() {
+        return messageCode;
+    }
+
+    public void setMessageCode(String messageCode) {
+        this.messageCode = messageCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }
