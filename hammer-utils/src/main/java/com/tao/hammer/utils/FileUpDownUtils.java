@@ -11,10 +11,11 @@ import java.util.UUID;
 
 /**
  * 文件上传下载的工具类
- * Create by tyq on 2017/10/12.
+ * @author tyq, 2017/10/12
  */
 
-public final class FileUpDownUtils {
+public class FileUpDownUtils {
+
     /**
      * private constructor method that make class can not be instantiation
      */
@@ -113,7 +114,7 @@ public final class FileUpDownUtils {
         try {
             inputStream = new BufferedInputStream(new FileInputStream(file));
             byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
+            int n = inputStream.read(buffer);
             inputStream.close();
             response.reset();
             // 先去掉文件名称中的空格,然后转换编码格式为utf-8,保证不出现乱码,这个文件名称用于浏览器的下载框中自动显示的文件名
@@ -122,7 +123,8 @@ public final class FileUpDownUtils {
             response.addHeader("Content-Length", "" + file.length());
             OutputStream os = new BufferedOutputStream(response.getOutputStream());
             response.setContentType("application/octet-stream");
-            os.write(buffer);// 输出文件
+            // 输出文件
+            os.write(buffer);
             os.flush();
             os.close();
         } catch (Exception e) {
@@ -132,38 +134,70 @@ public final class FileUpDownUtils {
 
 
     //-------------------------------------------------------------------------------
-    //return server absolute path（real path）
+
+    /**
+     * return server absolute path（real path）
+     * @param request
+     * @param filePath
+     * @return
+     */
     public static String getServerPath(HttpServletRequest request, String filePath) {
         return request.getSession().getServletContext().getRealPath(filePath);
     }
 
-    //return a dir that named date of today ; example:20160912
+    /**
+     * return a dir that named date of today ; example:20160912
+     * @return
+     */
     public static String getDataPath() {
         return new SimpleDateFormat("yyyyMMdd").format(new Date());
     }
 
-    //check if the path has exist if not create it
+    /**
+     * check if the path has exist if not create it
+     * @param savePath
+     */
     public static void checkDir(String savePath) {
         File dir = new File(savePath);
         if (!dir.exists() || !dir.isDirectory()) {
-            dir.mkdir();
+            boolean f = dir.mkdir();
         }
     }
 
-    //return an UUID Name parameter (suffix cover '.') example： ".jpg"、".txt"
+    /**
+     * return an UUID Name parameter (suffix cover '.') example： ".jpg"、".txt"
+     * @param suffix
+     * @return
+     */
     public static String getUUIDName(String suffix) {
-        return UUID.randomUUID().toString() + suffix;// make new file name
+        // make new file name
+        return UUID.randomUUID().toString() + suffix;
     }
 
-    //return server absolute path（real path） the style is  “server absolute path/DataPath/UUIDName”filePath example "/files/Upload"
+    /**
+     * return server absolute path（real path） the style is
+     * “server absolute path/DataPath/UUIDName”filePath example "/files/Upload"
+     * @param request
+     * @param filePath
+     * @param suffix
+     * @return
+     */
     public static String getAndSetAbsolutePath(HttpServletRequest request, String filePath, String suffix) {
-        String savePath = getServerPath(request, filePath) + File.separator + getDataPath() + File.separator;//example:F:/qixiao/files/Upload/20160912/
-        checkDir(savePath);//check if the path has exist if not create it
+        //example:F:/files/Upload/20160912/
+        String savePath = getServerPath(request, filePath) + File.separator + getDataPath() + File.separator;
+        //check if the path has exist if not create it
+        checkDir(savePath);
         return savePath + getUUIDName(suffix);
     }
 
-    //get the relative path of files style is “/filePath/DataPath/UUIDName”filePath example "/files/Upload"
+    /**
+     * get the relative path of files style is “/filePath/DataPath/UUIDName”filePath example "/files/Upload"
+     * @param filePath
+     * @param suffix
+     * @return
+     */
     public static String getRelativePath(String filePath, String suffix) {
-        return filePath + File.separator + getDataPath() + File.separator + getUUIDName(suffix);//example:/files/Upload/20160912/
+        //example:/files/Upload/20160912/
+        return filePath + File.separator + getDataPath() + File.separator + getUUIDName(suffix);
     }
 }
